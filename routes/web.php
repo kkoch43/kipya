@@ -18,3 +18,4 @@ Route::get('/', function () {
 Route::get('map', function () {
     return view('front');
 });
+

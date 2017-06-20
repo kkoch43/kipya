@@ -15,14 +15,20 @@ $(document).ready(function(){
     }
 
     function success(position){
+
         console.log(position);
+
         var latval = position.coords.latitude;
         var lngval = position.coords.longitude;
+
+
 
          myLatLng = new google.maps.LatLng(latval, lngval);
 
         createMap(myLatLng);
-        nearbySearch(myLatLng,"church");
+       // nearbySearch(myLatLng,"church");
+
+        searchGirls(latval, lngval);
     }
 
     function fail(){
@@ -49,18 +55,18 @@ $(document).ready(function(){
 
     //marker
 
-    function createMarker(latlng) {
+    function createMarker(latlng, icn, name) {
         var marker = new google.maps.Marker({
             position: latlng,
             map: map,
             icon:icn,
-            title: ttl
+            title: name
         });
     }
 
 
 // nearby search
-    function nearbySearch(myLatLang, type) {
+   /* function nearbySearch(myLatLang, type) {
         var request = {
             location: myLatLng,
             radius: '10500',
@@ -84,6 +90,25 @@ $(document).ready(function(){
             }
         }
 
-    }
+    } */
+
+
+   function searchGirls(lat,lng){
+       $.post('http://localhost/kipya/public/api/searchGirls',{lat:lat, lng:lng},function(match){
+           //console.log(match);
+
+           $.each(match,function(i,val){
+               var glatval = val.lat;
+               var glngval = val.lng;
+               var gname = val.name;
+
+               var GLatLng = new google.maps.LatLng(glatval, glngval);
+               var gicn = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+
+               createMarker(GLatLng,gicn,gname);
+           });
+
+       });
+   }
 
 });

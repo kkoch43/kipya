@@ -2,11 +2,27 @@
 
 @section('content')
 
-    <div class="container">
-        <br/>
+    <div class="container text-center">
+        <h2>Kipya Africa</h2>
         <div id="map">
 
         </div>
+
+
+    </br>
+
+        {!!  Form::open([]) !!}
+
+        {!! Form::label('district', 'District:') !!}
+
+
+        {!! Form::select('district', $districts, null,['id' => 'district']) !!}
+
+        <div id="city">
+
+        </div>
+
+        {!! Form::close() !!}
     </div>
 
 

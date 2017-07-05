@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Girl;
+use App\Location;
 use Illuminate\Http\Request;
 
 class SearchGirlsController extends Controller
@@ -15,5 +16,12 @@ class SearchGirlsController extends Controller
 
         $girls= Girl::whereBetween('lat', [$lat-0.1, $lat+0.1])->whereBetween('lng', [$lng-0.1, $lng+0.1])->get();
         return $girls;
+    }
+
+    public function searchCity(Request $request){
+
+        $distval = $request->distval;
+        $matchedCities = Location::where('district', $distval)->pluck('city','city');
+        return view('ajaxresults', compact('matchedCities'));
     }
 }

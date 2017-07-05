@@ -1,5 +1,7 @@
 <?php
 
+use App\Location;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,10 +14,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
 });
 
 Route::get('map', function () {
-    return view('front');
+
+    $districts = Location::pluck('district','district');
+
+    return view('front', compact('districts'));
+
 });
 
